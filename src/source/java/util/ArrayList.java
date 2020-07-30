@@ -304,7 +304,7 @@ public class ArrayList<E> extends AbstractList<E>
 
 
 
-    // 2020-07-30 阅至此.
+    // 2020-07-30 阅至此
 
 
 
