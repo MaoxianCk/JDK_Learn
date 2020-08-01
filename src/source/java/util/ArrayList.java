@@ -284,7 +284,7 @@ public class ArrayList<E> extends AbstractList<E>
         int oldCapacity = elementData.length;
         // 新的容量大小为 旧大小 + (旧大小 / 2)，即 1.5 倍
         int newCapacity = oldCapacity + (oldCapacity >> 1);
-        // 检查是否比最小容量更小
+        // 检查是否比最小容量更小 .
         // 分配的大小必须 >= minCapacity
         if (newCapacity - minCapacity < 0)
             newCapacity = minCapacity;
