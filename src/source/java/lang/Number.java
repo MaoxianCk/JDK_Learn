@@ -30,6 +30,7 @@ package java.lang;
  * classes representing numeric values that are convertible to the
  * primitive types {@code byte}, {@code double}, {@code float}, {@code
  * int}, {@code long}, and {@code short}.
+ * 对数值类型的抽象基类
  *
  * The specific semantics of the conversion from the numeric value of
  * a particular {@code Number} implementation to a given primitive

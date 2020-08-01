@@ -31,11 +31,13 @@ import java.lang.annotation.Native;
  * The {@code Integer} class wraps a value of the primitive type
  * {@code int} in an object. An object of type {@code Integer}
  * contains a single field whose type is {@code int}.
+ * int的包装类，将值类型的int 包装为一个对象
  *
  * <p>In addition, this class provides several methods for converting
  * an {@code int} to a {@code String} and a {@code String} to an
  * {@code int}, as well as other constants and methods useful when
  * dealing with an {@code int}.
+ * 提供了一些方法用于将int 转换为String类型
  *
  * <p>Implementation note: The implementations of the "bit twiddling"
  * methods (such as {@link #highestOneBit(int) highestOneBit} and
@@ -53,12 +55,14 @@ public final class Integer extends Number implements Comparable<Integer> {
     /**
      * A constant holding the minimum value an {@code int} can
      * have, -2<sup>31</sup>.
+     * -2^31 -2147483648
      */
     @Native public static final int   MIN_VALUE = 0x80000000;
 
     /**
      * A constant holding the maximum value an {@code int} can
      * have, 2<sup>31</sup>-1.
+     * 2^31-1 2147483647
      */
     @Native public static final int   MAX_VALUE = 0x7fffffff;
 
@@ -73,6 +77,7 @@ public final class Integer extends Number implements Comparable<Integer> {
 
     /**
      * All possible chars for representing a number as a String
+     * 在转换中，各进制中可能用到的字符
      */
     final static char[] digits = {
         '0' , '1' , '2' , '3' , '4' , '5' ,
@@ -126,12 +131,15 @@ public final class Integer extends Number implements Comparable<Integer> {
      * @return  a string representation of the argument in the specified radix.
      * @see     java.lang.Character#MAX_RADIX
      * @see     java.lang.Character#MIN_RADIX
+     *
+     * 将int 根据radix 转成对应的进制 radix表示进制
      */
     public static String toString(int i, int radix) {
         if (radix < Character.MIN_RADIX || radix > Character.MAX_RADIX)
             radix = 10;
 
         /* Use the faster version */
+        // 如果是10进制 则直接直接用数字的转换方法，不需要转换进制
         if (radix == 10) {
             return toString(i);
         }
@@ -144,6 +152,7 @@ public final class Integer extends Number implements Comparable<Integer> {
             i = -i;
         }
 
+        // 进制转换
         while (i <= -radix) {
             buf[charPos--] = digits[-(i % radix)];
             i = i / radix;
@@ -528,6 +537,7 @@ public final class Integer extends Number implements Comparable<Integer> {
      *             specified radix.
      * @exception  NumberFormatException if the {@code String}
      *             does not contain a parsable {@code int}.
+     *             将各种数值字符串转换为int 数字
      */
     public static int parseInt(String s, int radix)
                 throws NumberFormatException
@@ -561,6 +571,7 @@ public final class Integer extends Number implements Comparable<Integer> {
 
         if (len > 0) {
             char firstChar = s.charAt(0);
+            // 检查正负号及是否只有符号的情况
             if (firstChar < '0') { // Possible leading "+" or "-"
                 if (firstChar == '-') {
                     negative = true;
@@ -572,6 +583,7 @@ public final class Integer extends Number implements Comparable<Integer> {
                     throw NumberFormatException.forInputString(s);
                 i++;
             }
+            // 高往低逐位转换
             multmin = limit / radix;
             while (i < len) {
                 // Accumulating negatively avoids surprises near MAX_VALUE
@@ -614,6 +626,8 @@ public final class Integer extends Number implements Comparable<Integer> {
     public static int parseInt(String s) throws NumberFormatException {
         return parseInt(s,10);
     }
+
+    // 2020-08-01阅
 
     /**
      * Parses the string argument as an unsigned integer in the radix
