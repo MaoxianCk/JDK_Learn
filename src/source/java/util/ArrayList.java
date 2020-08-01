@@ -108,6 +108,9 @@ import sun.misc.SharedSecrets;
  * @author Ck
  * ArrayList<E> 继承于 AbstractList<E>
  * 根据实现的对应接口，支持序列化、克隆，RandomAccess接口以规范该类为随机访问列表（ArrayList基于数组实现。对应的非顺序访问，如LinkedList）
+ * 可变长的List，基于数组实现，线程不安全。
+ * 若为空，则会默认分配容量为10的空间，每次add等添加操作前，调用ensureCapacityInternal(预期大小) 来保证内部数组的长度足够添加新的元素，
+ * 若检查中发现长度不足，则会对数组进行扩容，每次扩容1.5倍，扩容后通过Array.copy方法把旧数据拷贝到新的数组上，最大长度为Integer.MAX_VALUE - 8
  */
 public class ArrayList<E> extends AbstractList<E>
         implements List<E>, RandomAccess, Cloneable, java.io.Serializable
@@ -265,7 +268,8 @@ public class ArrayList<E> extends AbstractList<E>
      * Some VMs reserve some header words in an array.
      * Attempts to allocate larger arrays may result in
      * OutOfMemoryError: Requested array size exceeds VM limit
-     * 允许的最大容量范围，为Integer.MAX_VALUE - 8 ，但实际上可能会触发内存异常
+     * 允许的最大容量范围，为Integer.MAX_VALUE - 8 ，8 是数组需要8个字节来存储本身的长度信息，实际数值依据JVM 而变化
+     * 但是实际上最后在执行的时候hugeCapacity函数，若大于-8后的Integer.MAX_VALUE 依然还是以MAX_VALUE为准而不是减8后的长度，此处-8 只是为了减少发生错误的可能性
      */
     private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
@@ -654,6 +658,8 @@ public class ArrayList<E> extends AbstractList<E>
      * @return <tt>true</tt> if this list changed as a result of the call
      * @throws IndexOutOfBoundsException {@inheritDoc}
      * @throws NullPointerException if the specified collection is null
+     *
+     * 整体后移再拷贝
      */
     public boolean addAll(int index, Collection<? extends E> c) {
         rangeCheckForAdd(index);
@@ -689,11 +695,14 @@ public class ArrayList<E> extends AbstractList<E>
     protected void removeRange(int fromIndex, int toIndex) {
         modCount++;
         int numMoved = size - toIndex;
+
+        // 整体向前移动
         System.arraycopy(elementData, toIndex, elementData, fromIndex,
                          numMoved);
 
         // clear to let GC do its work
         int newSize = size - (toIndex-fromIndex);
+        // 设null 使GC 作用
         for (int i = newSize; i < size; i++) {
             elementData[i] = null;
         }
@@ -805,6 +814,7 @@ public class ArrayList<E> extends AbstractList<E>
      * @serialData The length of the array backing the <tt>ArrayList</tt>
      *             instance is emitted (int), followed by all of its elements
      *             (each an <tt>Object</tt>) in the proper order.
+     * 将列表写到对象输出流中
      */
     private void writeObject(java.io.ObjectOutputStream s)
         throws java.io.IOException{
@@ -896,6 +906,7 @@ public class ArrayList<E> extends AbstractList<E>
 
     /**
      * An optimized version of AbstractList.Itr
+     * 迭代器
      */
     private class Itr implements Iterator<E> {
         int cursor;       // index of next element to return
