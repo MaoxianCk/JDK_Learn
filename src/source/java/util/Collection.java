@@ -139,6 +139,8 @@ import java.util.stream.StreamSupport;
  * @see     Arrays
  * @see     AbstractCollection
  * @since 1.2
+ *
+ * 规定了集合类的基本操作函数
  */
 
 public interface Collection<E> extends Iterable<E> {
@@ -150,6 +152,7 @@ public interface Collection<E> extends Iterable<E> {
      * <tt>Integer.MAX_VALUE</tt>.
      *
      * @return the number of elements in this collection
+     * 返回大小
      */
     int size();
 
@@ -157,6 +160,7 @@ public interface Collection<E> extends Iterable<E> {
      * Returns <tt>true</tt> if this collection contains no elements.
      *
      * @return <tt>true</tt> if this collection contains no elements
+     * 是否为空
      */
     boolean isEmpty();
 
@@ -175,6 +179,7 @@ public interface Collection<E> extends Iterable<E> {
      * @throws NullPointerException if the specified element is null and this
      *         collection does not permit null elements
      *         (<a href="#optional-restrictions">optional</a>)
+     * 是否包含
      */
     boolean contains(Object o);
 

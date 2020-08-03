@@ -85,6 +85,8 @@ import sun.misc.SharedSecrets;
  * @see     TreeSet
  * @see     HashMap
  * @since   1.2
+ *
+ * HashSet 内部使用HashMap 实现
  */
 
 public class HashSet<E>

@@ -11,7 +11,12 @@
 11. java.net 主要包含 Java 网络通信（典型的如：Socket 通信）相关的源代码。
 
 ### 基本类型
-    1. java.lang.Number
+    1. java.lang.Number 已阅
     2. java.lang.Integer
 ### 容器:
-    1. java.util.ArrayList 已阅
+    1. java.util.Collection 已阅
+    2. java.util.AbstractCollection 已阅
+    3. java.util.ArrayList 已阅
+    4. java.util.LinkedList 已阅
+    5. java.util.Vector 已阅
+    6. java.util.HashSet 已阅

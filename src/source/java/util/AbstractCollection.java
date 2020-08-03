@@ -56,6 +56,8 @@ package java.util;
  * @author  Neal Gafter
  * @see Collection
  * @since 1.2
+ * 集合类的抽象基类，封装一些通用字段，内置了集合接口的迭代器版本
+ * 类似 增加 这类操作，依赖于具体的列表实现类型，无法实现，需要子类重新实现，否则报错未实现
  */
 
 public abstract class AbstractCollection<E> implements Collection<E> {

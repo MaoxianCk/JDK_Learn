@@ -82,6 +82,9 @@ import java.util.function.UnaryOperator;
  * @see Collection
  * @see LinkedList
  * @since   JDK1.0
+ * 线程同步的，但是慢于ArrayList
+ * 主要是在修改的函数上使用了synchronized关键字，保证函数在语言级别的线程同步
+ * 但是效率较低，其内部实现为数组，基本和ArrayList相同
  */
 public class Vector<E>
     extends AbstractList<E>
