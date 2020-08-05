@@ -134,6 +134,7 @@ import sun.misc.SharedSecrets;
  * @see     TreeMap
  * @see     Hashtable
  * @since   1.2
+ * HashMap是使用拉链法实现的哈希表
  */
 public class HashMap<K,V> extends AbstractMap<K,V>
     implements Map<K,V>, Cloneable, Serializable {
@@ -276,7 +277,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      * Basic hash bin node, used for most entries.  (See below for
      * TreeNode subclass, and in LinkedHashMap for its Entry subclass.)
      * 基本节点
-     * 哈希值，键值对，后节点指针
+     * 哈希值，键值对，有后节点指针的单链表
      */
     static class Node<K,V> implements Map.Entry<K,V> {
         final int hash;
@@ -335,6 +336,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      * cheapest possible way to reduce systematic lossage, as well as
      * to incorporate impact of the highest bits that would otherwise
      * never be used in index calculations because of table bounds.
+     * 将hashCode的高位和自身进行异或
      */
     static final int hash(Object key) {
         int h;
